@@ -1,0 +1,7 @@
+{
+  "name": "author-chronology-vue",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
