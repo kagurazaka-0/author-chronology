@@ -2,7 +2,7 @@
  * 楽天ブックス書籍検索API 出力パラメーター(成功時)
  * @see https://webservice.rakuten.co.jp/api/booksbooksearch#outputParameter
  */
-interface SuccessResponse {
+interface SuccessResponseParameter {
   Items: Array<{ Item: ResponseItem }>
 
   pageCount: number
@@ -18,7 +18,7 @@ interface SuccessResponse {
 /**
  * @see https://webservice.rakuten.co.jp/api/booksbooksearch#outputParameter
  */
-interface ResponseItem {
+export interface ResponseItem {
   limitedFlag: number
   authorKana: string
   author: string
@@ -55,9 +55,9 @@ interface ResponseItem {
  * 楽天ブックス書籍検索API 出力パラメーター(エラー時)
  * @see https://webservice.rakuten.co.jp/api/booksbooksearch#aboutError
  */
-interface ErrorResponse {
+interface ErrorResponseParameter {
   error: string
   error_description: string
 }
 
-export type Response = SuccessResponse | ErrorResponse
+export type ResponseParameter = SuccessResponseParameter | ErrorResponseParameter

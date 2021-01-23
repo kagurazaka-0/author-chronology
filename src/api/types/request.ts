@@ -38,7 +38,7 @@ type OptionalRequestParameter = {
   formatVersion?: number
   /** 1ページあたりの取得件数 */
   hits?: number
-  /** 取得ページ */
+  /** 取得ページ 1から100までの整数 */
   page?: number
   /** 在庫状況 */
   availability?: number
