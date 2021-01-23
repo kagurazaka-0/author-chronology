@@ -46,6 +46,7 @@ export default defineComponent({
       const loading = await loadingController.create({
         message: "読み込み中...",
         duration: 10000, // timeout
+        spinner: "circles",
       })
       await loading.present()
       await firstLoad$
