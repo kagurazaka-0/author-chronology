@@ -55,7 +55,7 @@ export interface ResponseItem {
  * 楽天ブックス書籍検索API 出力パラメーター(エラー時)
  * @see https://webservice.rakuten.co.jp/api/booksbooksearch#aboutError
  */
-interface ErrorResponseParameter {
+export interface ErrorResponseParameter {
   error: string
   error_description: string
 }

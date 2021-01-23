@@ -3,6 +3,12 @@ import axios, { AxiosResponse } from "axios"
 import { IS_MOCK_MODE } from "@/utils/mock"
 import { RequestParameter, ResponseParameter } from "./types/"
 
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
 const BASE_AXIOS = axios.create({
   method: "GET",
   baseURL: "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404",
@@ -14,6 +20,7 @@ const BASE_AXIOS = axios.create({
 
 export async function getFromRakutenBookApi(params: RequestParameter): Promise<ResponseParameter> {
   if (IS_MOCK_MODE) {
+    await sleep(1000)
     return require("./mock.json") as ResponseParameter
   }
   const res = await BASE_AXIOS.get<RequestParameter, AxiosResponse<ResponseParameter>>("./", {

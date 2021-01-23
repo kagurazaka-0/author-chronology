@@ -30,10 +30,12 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue"
 import { alertController } from "@ionic/vue"
+import { useRouter } from "vue-router"
 
 export default defineComponent({
   name: "Tab1",
   setup() {
+    const router = useRouter()
     const author = ref("")
     const onSubmit = async () => {
       if (!author.value) {
@@ -45,6 +47,7 @@ export default defineComponent({
         alert.present()
         return
       }
+      router.push(`/tabs/tab1/${author.value}`)
     }
     return { author, onSubmit }
   },

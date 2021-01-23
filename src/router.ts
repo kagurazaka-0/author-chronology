@@ -18,6 +18,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "tab1",
         component: () => import("@/views/Tabs/Tab1/index.vue"),
+        children: [{ path: ":author", component: () => import("@/views/Tabs/Tab1/_author.vue") }],
       },
       {
         path: "tab2",
