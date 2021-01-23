@@ -54,6 +54,4 @@ export default defineComponent({
     return { author, itemsRef, hasNextRef, countTextRef, loadData }
   },
 })
-
-type K = HTMLIonInfiniteScrollElement["complete"]
 </script>
