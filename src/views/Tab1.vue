@@ -16,7 +16,7 @@
       <form @submit.prevent="onSubmit">
         <ion-item>
           <ion-label position="stacked">著者</ion-label>
-          <ion-input type="text" autocomplete="hidden" v-model="auther"></ion-input>
+          <ion-input type="text" autocomplete="hidden" v-model="author"></ion-input>
         </ion-item>
 
         <div class="ion-padding">
@@ -34,9 +34,9 @@ import { alertController } from "@ionic/vue"
 export default defineComponent({
   name: "Tab1",
   setup() {
-    const auther = ref("")
+    const author = ref("")
     const onSubmit = async () => {
-      if (!auther.value) {
+      if (!author.value) {
         const alert = await alertController.create({
           header: "エラー",
           message: "著者を入力してください。",
@@ -46,7 +46,7 @@ export default defineComponent({
         return
       }
     }
-    return { auther, onSubmit }
+    return { author, onSubmit }
   },
 })
 </script>
