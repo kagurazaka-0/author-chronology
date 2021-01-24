@@ -23,7 +23,7 @@ type RequiredRequestParameter = EitherRequired<{
  * 楽天ブックス書籍検索API 入力パラメーター(任意項目)
  * @see https://webservice.rakuten.co.jp/api/booksbooksearch#inputParameter
  */
-type OptionalRequestParameter = {
+export type OptionalRequestParameter = {
   /** アプリID */
   applicationId?: string
   /** アフィリエイトID */

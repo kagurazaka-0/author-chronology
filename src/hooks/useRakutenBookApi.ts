@@ -39,7 +39,7 @@ function createErrorAlertOptions(res: ErrorResponseParameter, author: string): A
   }
 }
 
-const SALES_DATE_REGEX = /^(\d{4})年(\d{2})月(\d{2}日頃)?$/
+const SALES_DATE_REGEX = /^(\d{4})年(\d{2})月(\d{2}日頃?)?$/
 
 function createSalesDateTime(item: ResponseItem): Date {
   const { salesDate } = item

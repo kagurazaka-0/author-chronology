@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 
 import { IS_MOCK_MODE } from "@/utils/mock"
-import { RequestParameter, ResponseParameter } from "./types/"
+import { OptionalRequestParameter, RequestParameter, ResponseParameter } from "./types/"
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => {
@@ -15,7 +15,8 @@ const BASE_AXIOS = axios.create({
   params: {
     format: "json",
     applicationId: process.env.VUE_APP_RAKUTEN_API_APPLICATION_ID,
-  },
+    sort: "+releaseDate",
+  } as OptionalRequestParameter,
 })
 
 export async function getFromRakutenBookApi(params: RequestParameter): Promise<ResponseParameter> {
