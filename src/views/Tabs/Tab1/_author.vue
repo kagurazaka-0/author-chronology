@@ -9,10 +9,38 @@
       </ion-toolbar>
     </ion-header>
     <ion-content fullscreen>
-      <ion-list>
-        <ion-item v-for="item in itemsRef">
-          {{ item.title }}
+      <!-- HACK: itemsGroupByYearMapはMap型だが、Iterable<[K, V]>を返す[Symbol.iterator]()を実装しているため、こう書ける -->
+      <ion-list v-for="[year, items] in itemsGroupByYearMap">
+        <ion-list-header>
+          <ion-label>
+            <ion-label>{{ year }}年</ion-label>
+          </ion-label>
+        </ion-list-header>
+        <!--
+          <ion-item v-for="item in items">
+          <ion-avatar slot="start">
+            <img :src="item.smallImageUrl" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.itemCaption }}</p>
+          </ion-label>
         </ion-item>
+           -->
+        <ion-card v-for="item in items">
+          <div class="MyIonCard-top__container">
+            <img :src="item.smallImageUrl" />
+          </div>
+          <ion-card-header>
+            <ion-card-title>{{ item.title }}</ion-card-title>
+            <ion-card-subtitle>{{
+              `${item.salesDateTime.getFullYear()}/${item.salesDateTime.getMonth() + 1}`
+            }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{ item.itemCaption }}
+          </ion-card-content>
+        </ion-card>
       </ion-list>
 
       <ion-infinite-scroll @ionInfinite="loadData" threshold="100px" :disabled="!hasNextRef">
@@ -24,10 +52,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue"
+import { computed, defineComponent, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import { useRakutenBookApi } from "@/hooks/useRakutenBookApi"
 import { loadingController } from "@ionic/vue"
+import { groupBy } from "@/utils/groupBy"
 
 export default defineComponent({
   name: "Chronology",
@@ -39,6 +68,8 @@ export default defineComponent({
       await next()
       e.target.complete()
     }
+
+    const itemsGroupByYearMap = computed(() => groupBy(itemsRef.value, item => item.salesDateTime.getFullYear()))
 
     onMounted(async () => {
       const firstLoad$ = next()
@@ -52,7 +83,7 @@ export default defineComponent({
       await firstLoad$
       loading.dismiss()
     })
-    return { author, itemsRef, hasNextRef, countTextRef, loadData }
+    return { author, itemsRef, hasNextRef, countTextRef, loadData, itemsGroupByYearMap }
   },
 })
 </script>

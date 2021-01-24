@@ -1,4 +1,10 @@
-import { getFromRakutenBookApi, ResponseItem, ResponseParameter, ErrorResponseParameter } from "@/api"
+import {
+  getFromRakutenBookApi,
+  ResponseParameter,
+  ErrorResponseParameter,
+  ResponseItemWithDateTime,
+  ResponseItem,
+} from "@/api"
 import { IS_MOCK_MODE } from "@/utils/mock"
 import { AlertOptions } from "@ionic/core"
 import { alertController } from "@ionic/vue"
@@ -33,8 +39,25 @@ function createErrorAlertOptions(res: ErrorResponseParameter, author: string): A
   }
 }
 
+const SALES_DATE_REGEX = /^(\d{4})年(\d{2})月(\d{2}日頃)?$/
+
+function createSalesDateTime(item: ResponseItem): Date {
+  const { salesDate } = item
+  const match = SALES_DATE_REGEX.exec(salesDate)
+  if (!match) {
+    console.warn("`ResponseItem.saleDate` is not match `/^(d{4})年(d{2})月(d{2}日頃)?$/.`", item)
+    return null!
+  }
+  const [, yearStr, monthStr, , dayStr] = match
+  const year = Number(yearStr)
+  const month = Number(monthStr)
+  const day = dayStr != null ? Number(dayStr) : 1
+
+  return new Date(year, month - 1, day)
+}
+
 export function useRakutenBookApi(author: string) {
-  const itemsRef = ref([]) as Ref<Array<ResponseItem>>
+  const itemsRef = ref([]) as Ref<Array<ResponseItemWithDateTime>>
   const responseRef = ref<ResponseParameter>()
   const hasNextRef = computed(() => {
     if (IS_MOCK_MODE) {
@@ -61,7 +84,10 @@ export function useRakutenBookApi(author: string) {
     if (isErrorResponseParameter(res)) {
       return
     }
-    const newItems = res.Items.map(({ Item }) => Item)
+    const newItems = res.Items.map<ResponseItemWithDateTime>(({ Item }) => ({
+      ...Item,
+      salesDateTime: createSalesDateTime(Item),
+    }))
     itemsRef.value = [...itemsRef.value, ...newItems]
     if (hasNextRef.value) {
       nextPageCount = res.page + 1

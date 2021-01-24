@@ -51,6 +51,11 @@ export interface ResponseItem {
   itemUrl: string
 }
 
+/** ResponseItemの`salesDate`からDate型に変換した`salesDateTime`を追加した型 */
+export interface ResponseItemWithDateTime extends ResponseItem {
+  salesDateTime: Date
+}
+
 /**
  * 楽天ブックス書籍検索API 出力パラメーター(エラー時)
  * @see https://webservice.rakuten.co.jp/api/booksbooksearch#aboutError
