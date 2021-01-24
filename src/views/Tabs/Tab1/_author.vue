@@ -25,7 +25,7 @@
 
         <div class="BookList__container">
           <div class="BookList">
-            <Book v-for="item in items" :item="item" />
+            <BookCard v-for="item in items" :item="item" />
           </div>
         </div>
       </ion-list>
@@ -44,11 +44,11 @@ import { useRoute } from "vue-router"
 import { useRakutenBookApi } from "@/hooks/useRakutenBookApi"
 import { loadingController } from "@ionic/vue"
 import { groupBy } from "@/utils/groupBy"
-import Book from "@/components/Book.vue"
+import BookCard from "@/components/BookCard.vue"
 
 export default defineComponent({
   name: "Chronology",
-  components: { Book },
+  components: { BookCard },
   setup() {
     const route = useRoute()
     const author = route.params.author as string
