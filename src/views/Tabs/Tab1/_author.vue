@@ -16,31 +16,8 @@
             <ion-label>{{ year }}年</ion-label>
           </ion-label>
         </ion-list-header>
-        <!--
-          <ion-item v-for="item in items">
-          <ion-avatar slot="start">
-            <img :src="item.smallImageUrl" />
-          </ion-avatar>
-          <ion-label>
-            <h2>{{ item.title }}</h2>
-            <p>{{ item.itemCaption }}</p>
-          </ion-label>
-        </ion-item>
-           -->
-        <ion-card v-for="item in items">
-          <div class="MyIonCard-top__container">
-            <img :src="item.smallImageUrl" />
-          </div>
-          <ion-card-header>
-            <ion-card-title>{{ item.title }}</ion-card-title>
-            <ion-card-subtitle>{{
-              `${item.salesDateTime.getFullYear()}/${item.salesDateTime.getMonth() + 1}`
-            }}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            {{ item.itemCaption }}
-          </ion-card-content>
-        </ion-card>
+
+        <Book v-for="item in items" :item="item" />
       </ion-list>
 
       <ion-infinite-scroll @ionInfinite="loadData" threshold="100px" :disabled="!hasNextRef">
@@ -57,9 +34,11 @@ import { useRoute } from "vue-router"
 import { useRakutenBookApi } from "@/hooks/useRakutenBookApi"
 import { loadingController } from "@ionic/vue"
 import { groupBy } from "@/utils/groupBy"
+import Book from "@/components/Book.vue"
 
 export default defineComponent({
   name: "Chronology",
+  components: { Book },
   setup() {
     const route = useRoute()
     const author = route.params.author as string
