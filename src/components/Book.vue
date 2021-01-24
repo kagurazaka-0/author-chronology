@@ -1,7 +1,7 @@
 <template>
   <ion-card>
     <div class="MyIonCard-top__container">
-      <img :src="item.smallImageUrl" />
+      <img class="MyIonCard-top__image" :src="item.mediumImageUrl" />
     </div>
     <ion-card-header>
       <ion-card-title>{{ item.title }}</ion-card-title>
@@ -10,7 +10,9 @@
       }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      {{ item.itemCaption }}
+      <div class="MyIonCard-content">
+        {{ item.itemCaption }}
+      </div>
     </ion-card-content>
   </ion-card>
 </template>
@@ -31,3 +33,29 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.MyIonCard {
+  &-top {
+    &__container {
+      width: 100%;
+      height: 12rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(236, 209, 209);
+    }
+    &__image {
+      height: 8rem;
+      filter: drop-shadow(0 5px 8px #111); // TODO: 色やbackgroundを調整
+    }
+  }
+  &-content {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+}
+</style>
