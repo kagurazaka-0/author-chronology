@@ -39,18 +39,18 @@ function createErrorAlertOptions(res: ErrorResponseParameter, author: string): A
   }
 }
 
-const SALES_DATE_REGEX = /^(\d{4})年(\d{2})月(\d{2}日頃?)?$/
+const SALES_DATE_REGEX = /^(\d{4})年((\d{2})月)?(\d{2}日頃?)?$/
 
 function createSalesDateTime(item: ResponseItem): Date {
   const { salesDate } = item
   const match = SALES_DATE_REGEX.exec(salesDate)
   if (!match) {
-    console.warn("`ResponseItem.saleDate` is not match `/^(d{4})年(d{2})月(d{2}日頃)?$/.`", item)
+    console.warn("`ResponseItem.saleDate` is not match " + SALES_DATE_REGEX.toString(), item)
     return null!
   }
-  const [, yearStr, monthStr, , dayStr] = match
+  const [, yearStr, , monthStr, , dayStr] = match
   const year = Number(yearStr)
-  const month = Number(monthStr)
+  const month = monthStr != null ? Number(monthStr) : 1
   const day = dayStr != null ? Number(dayStr) : 1
 
   return new Date(year, month - 1, day)
