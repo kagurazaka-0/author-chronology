@@ -1,7 +1,7 @@
 <template>
   <ion-card>
     <div class="MyIonCard-top__container">
-      <img class="MyIonCard-top__image" :src="item.mediumImageUrl" />
+      <img ref="image" class="MyIonCard-top__image" :src="item.mediumImageUrl" />
     </div>
     <ion-card-header>
       <ion-card-title>{{ item.title }}</ion-card-title>
@@ -18,8 +18,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { defineComponent, onMounted, PropType, ref } from "vue"
+import Vibrant from "node-vibrant"
+
 import { ResponseItemWithDateTime } from "@/api"
+
+function asyncLoadImage(image: HTMLImageElement): Promise<void> {
+  if (image.complete) return Promise.resolve()
+
+  return new Promise(resolve => {
+    image.addEventListener("load", function callback() {
+      resolve()
+      image.removeEventListener("load", callback)
+    })
+  })
+}
 
 export default defineComponent({
   props: {
@@ -29,7 +42,13 @@ export default defineComponent({
     },
   },
   setup() {
-    return {}
+    const image = ref<HTMLImageElement>()
+    onMounted(async () => {
+      asyncLoadImage(image.value!)
+      const v = new Vibrant(image.value!)
+      console.log(v)
+    })
+    return { image }
   },
 })
 </script>
