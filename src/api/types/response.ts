@@ -54,6 +54,7 @@ export interface ResponseItem {
 /** ResponseItemの`salesDate`からDate型に変換した`salesDateTime`を追加した型 */
 export interface ResponseItemWithDateTime extends ResponseItem {
   salesDateTime: Date
+  salesDateText: string
 }
 
 /**

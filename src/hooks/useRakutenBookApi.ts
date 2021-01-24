@@ -84,10 +84,12 @@ export function useRakutenBookApi(author: string) {
     if (isErrorResponseParameter(res)) {
       return
     }
-    const newItems = res.Items.map<ResponseItemWithDateTime>(({ Item }) => ({
-      ...Item,
-      salesDateTime: createSalesDateTime(Item),
-    }))
+    const newItems = res.Items.map<ResponseItemWithDateTime>(({ Item }) => {
+      const salesDateTime = createSalesDateTime(Item)
+      const [year, month] = <const>[salesDateTime.getFullYear(), salesDateTime.getMonth() + 1]
+      const salesDateText = `${year}/${month}`
+      return { ...Item, salesDateTime, salesDateText }
+    })
     itemsRef.value = [...itemsRef.value, ...newItems]
     if (hasNextRef.value) {
       nextPageCount = res.page + 1

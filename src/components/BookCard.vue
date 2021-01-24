@@ -5,7 +5,7 @@
     </div>
     <ion-card-header>
       <ion-card-title class="MyIonCard-title">{{ item.title }}</ion-card-title>
-      <ion-card-subtitle>{{ dateText }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ item.salesDateText }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <div class="MyIonCard-content">
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue"
+import { defineComponent, PropType } from "vue"
 import { ResponseItemWithDateTime } from "@/api"
 
 export default defineComponent({
@@ -26,13 +26,8 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const dateText = computed(() => {
-      const year = props.item.salesDateTime.getFullYear()
-      const month = props.item.salesDateTime.getMonth() + 1
-      return `${year}/${month}`
-    })
-    return { dateText }
+  setup() {
+    return {}
   },
 })
 </script>
