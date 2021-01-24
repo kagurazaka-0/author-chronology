@@ -6,7 +6,6 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <!-- TODO: ここにもっとそれらしいタイトルロゴをおく -->
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">著者検索</ion-title>
@@ -16,7 +15,7 @@
       <form @submit.prevent="onSubmit">
         <ion-item>
           <ion-label position="stacked">著者</ion-label>
-          <ion-input type="text" autocomplete="hidden" v-model="author"></ion-input>
+          <ion-input type="text" autocomplete="off" v-model="author"></ion-input>
         </ion-item>
 
         <div class="ion-padding">

@@ -5,10 +5,16 @@
         <ion-buttons slot="start">
           <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
-        <ion-title>「{{ author }}」の検索結果</ion-title>
+        <ion-title>{{ headerTitle }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content fullscreen>
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">{{ headerTitle }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
       <!-- HACK: itemsGroupByYearMapはMap型だが、Iterable<[K, V]>を返す[Symbol.iterator]()を実装しているため、こう書ける -->
       <ion-list v-for="[year, items] in itemsGroupByYearMap">
         <ion-list-header>
@@ -17,7 +23,11 @@
           </ion-label>
         </ion-list-header>
 
-        <Book v-for="item in items" :item="item" />
+        <div class="BookList__container">
+          <div class="BookList">
+            <Book v-for="item in items" :item="item" />
+          </div>
+        </div>
       </ion-list>
 
       <ion-infinite-scroll @ionInfinite="loadData" threshold="100px" :disabled="!hasNextRef">
@@ -42,6 +52,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const author = route.params.author as string
+    const headerTitle = computed(() => `「${author}」の検索結果`)
     const { itemsRef, hasNextRef, countTextRef, next } = useRakutenBookApi(author)
     const loadData = async (e: { target: HTMLIonInfiniteScrollElement }) => {
       await next()
@@ -62,7 +73,28 @@ export default defineComponent({
       await firstLoad$
       loading.dismiss()
     })
-    return { author, itemsRef, hasNextRef, countTextRef, loadData, itemsGroupByYearMap }
+    return { headerTitle, itemsRef, hasNextRef, countTextRef, loadData, itemsGroupByYearMap }
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.BookList {
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  @media screen and (min-width: 400px) {
+    justify-content: flex-start;
+  }
+}
+</style>
