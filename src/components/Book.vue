@@ -18,7 +18,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { defineComponent, onMounted, PropType, ref } from "vue"
+import Vibrant from "node-vibrant"
+
 import { ResponseItemWithDateTime } from "@/api"
 
 export default defineComponent({
@@ -28,7 +30,11 @@ export default defineComponent({
       reqired: true,
     },
   },
-  setup() {
+  setup(props) {
+    onMounted(async () => {
+      const v = await Vibrant.from(props.item!.mediumImageUrl).getPalette()
+      console.log(v)
+    })
     return {}
   },
 })
