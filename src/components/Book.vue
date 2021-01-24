@@ -52,6 +52,7 @@ export default defineComponent({
     }
   }
   &-content {
+    // from https://www.nxworld.net/css-text-truncate.html
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
