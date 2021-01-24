@@ -2,6 +2,10 @@ import { createRouter, createWebHashHistory } from "@ionic/vue-router"
 import { RouteRecordRaw } from "vue-router"
 import Tabs from "@/views/Tabs/index.vue"
 
+import Tab1 from "@/views/Tabs/Tab1/index.vue"
+import Tab2 from "@/views/Tabs/Tab2/index.vue"
+import Chronology from "@/views/Tabs/Tab1/_author.vue"
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -17,12 +21,12 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "tab1",
-        component: () => import("@/views/Tabs/Tab1/index.vue"),
-        children: [{ path: ":author", component: () => import("@/views/Tabs/Tab1/_author.vue") }],
+        component: Tab1,
+        children: [{ path: ":author", component: Chronology }],
       },
       {
         path: "tab2",
-        component: () => import("@/views/Tabs/Tab2/index.vue"),
+        component: Tab2,
       },
     ],
   },
