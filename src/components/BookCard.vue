@@ -63,9 +63,12 @@ export default defineComponent({
     @include text-truncate(1);
   }
   &-content {
-    // 日本語で3行
-    height: 66px;
     @include text-truncate(3);
+    // スマホ以外向け
+    @media screen and (mix-width: 400px) {
+      // 日本語で3行
+      height: 66px;
+    }
   }
 }
 </style>
